@@ -30,7 +30,7 @@ hscript = sanitize(hscript, {
     replace: function(el) {
         return {
             text: stringify(el)
-        }
+        };
     }
 });
 ```
