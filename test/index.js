@@ -48,3 +48,22 @@ it('should sanitize attributes', function() {
     hscript.children[0].properties.should.not.have.property('onclick');
     hscript.children[0].children[0].text.should.equal('Hello World');
 });
+
+it('should allow custom filtering', function() {
+    var hscript = hs('<div><h1>Hello World</h1> <script type="math/tex">a = b</script></div>');
+    hscript = sanitize(hscript, {
+        isTagAllowed: function(tag, el) {
+            if (tag == 'script' && el.properties.type == 'math/tex') return true;
+        }
+    });
+
+    hscript.tagName.should.equal('DIV');
+    hscript.children.should.have.length(3);
+    hscript.children[0].tagName.should.equal('H1');
+    hscript.children[1].text.should.equal(' ');
+
+    hscript.children[2].should.have.property('tagName');
+    hscript.children[2].tagName.should.equal('SCRIPT');
+    hscript.children[2].children.should.have.length(1);
+    hscript.children[2].children[0].text.should.equal('a = b');
+});
