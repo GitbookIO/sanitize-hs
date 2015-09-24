@@ -36,3 +36,15 @@ it('should sanitize scripts', function() {
     hscript.children[2].should.not.have.property('tagName');
     hscript.children[2].text.should.equal('<script>alert("hello")</script>');
 });
+
+it('should sanitize attributes', function() {
+    var hscript = hs('<div><a href="#" onclick="alert(\'test\')">Hello World</a></div>');
+    hscript = sanitize(hscript);
+
+    hscript.tagName.should.equal('DIV');
+    hscript.children.should.have.length(1);
+    hscript.children[0].tagName.should.equal('A');
+    hscript.children[0].properties.should.have.property('href');
+    hscript.children[0].properties.should.not.have.property('onclick');
+    hscript.children[0].children[0].text.should.equal('Hello World');
+});
