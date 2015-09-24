@@ -84,3 +84,31 @@ it('should allow custom escaping', function() {
         }
     );
 });
+
+it('should sanitize styles', function() {
+    assertSanitize(
+        '<style>body { background-image: url(&#1;javascript:alert(\'XSS\')) }</style>',
+        'body { background-image: url(&amp;#1;javascript:alert(&#39;XSS&#39;)) }'
+    );
+});
+
+it('should allow nice css', function() {
+    assertSanitize(
+        '<DIV STYLE="width: 10px;">',
+        '<div style="width: 10px;"></div>'
+    );
+});
+
+it('should sanitize style atribute (url)', function() {
+    assertSanitize(
+        '<DIV STYLE="background-image: url(&#1;javascript:alert(\'XSS\'))">',
+        '<div style=""></div>'
+    );
+});
+
+it('should sanitize style atribute (expression)', function() {
+    assertSanitize(
+        '<DIV STYLE="width: expression(alert(\'XSS\'));">',
+        '<div style=""></div>'
+    );
+});
