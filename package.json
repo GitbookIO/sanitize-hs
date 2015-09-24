@@ -1,0 +1,26 @@
+{
+    "name": "sanitize-hs",
+    "version": "0.0.0",
+    "description": "Sanitize hscript",
+    "main": "lib/index.js",
+    "dependencies": {
+        "lodash": "^3.10.1"
+    },
+    "devDependencies": {
+        "mocha": "1.18.2",
+        "html2hs": "1.0.3",
+        "virtual-dom": "2.1.1"
+    },
+    "scripts": {
+        "test": "export TESTING=true; mocha --reporter list"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/SamyPesse/sanitize-hs.git"
+    },
+    "author": "Samy Pessé <samypesse@gmail.com>",
+    "license": "Apache-2.0",
+    "bugs": {
+        "url": "https://github.com/SamyPesse/sanitize-hs/issues"
+    }
+}
