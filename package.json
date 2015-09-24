@@ -4,7 +4,8 @@
     "description": "Sanitize hscript",
     "main": "lib/index.js",
     "dependencies": {
-        "lodash": "^3.10.1"
+        "lodash": "^3.10.1",
+        "virtual-dom-stringify": "3.0.1"
     },
     "devDependencies": {
         "mocha": "2.3.3",
