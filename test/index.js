@@ -47,6 +47,28 @@ it('should sanitize attributes', function() {
     hscript.children[0].children[0].text.should.equal('Hello World');
 });
 
+it('should sanitize javascript schema', function() {
+    var hscript = hs('<div><a href="javascript:alert(\'test\')">Hello World</a></div>');
+    hscript = sanitize(hscript);
+
+    hscript.tagName.should.equal('DIV');
+    hscript.children.should.have.length(1);
+    hscript.children[0].tagName.should.equal('A');
+    hscript.children[0].properties.should.not.have.property('href');
+    hscript.children[0].children[0].text.should.equal('Hello World');
+});
+
+it('should sanitize http/https schemas', function() {
+    var hscript = hs('<div><a href="http://google.fr">Hello World</a></div>');
+    hscript = sanitize(hscript);
+
+    hscript.tagName.should.equal('DIV');
+    hscript.children.should.have.length(1);
+    hscript.children[0].tagName.should.equal('A');
+    hscript.children[0].properties.should.have.property('href');
+    hscript.children[0].children[0].text.should.equal('Hello World');
+});
+
 it('should allow custom filtering', function() {
     var hscript = hs('<div><h1>Hello World</h1> <script type="math/tex">a = b</script></div>');
     hscript = sanitize(hscript, {
