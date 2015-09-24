@@ -2,6 +2,7 @@ var util = require('util');
 var should = require('should');
 var html2hs = require('html2hs');
 var virtualDom = require('virtual-dom');
+var stringify = require('virtual-dom-stringify');
 
 var h = virtualDom.h;
 var sanitize = require('../');
@@ -29,12 +30,9 @@ it('should sanitize scripts', function() {
     hscript = sanitize(hscript);
 
     hscript.tagName.should.equal('DIV');
-    hscript.children.should.have.length(3);
+    hscript.children.should.have.length(2);
     hscript.children[0].tagName.should.equal('H1');
     hscript.children[1].text.should.equal(' ');
-    hscript.children[2].should.have.property('text');
-    hscript.children[2].should.not.have.property('tagName');
-    hscript.children[2].text.should.equal('<script>alert("hello")</script>');
 });
 
 it('should sanitize attributes', function() {
@@ -66,4 +64,23 @@ it('should allow custom filtering', function() {
     hscript.children[2].tagName.should.equal('SCRIPT');
     hscript.children[2].children.should.have.length(1);
     hscript.children[2].children[0].text.should.equal('a = b');
+});
+
+it('should allow custom escaping', function() {
+    var hscript = hs('<div><h1>Hello World</h1> <script>alert("hello")</script></div>');
+    hscript = sanitize(hscript, {
+        replace: function(el) {
+            return {
+                text: stringify(el)
+            }
+        }
+    });
+
+    hscript.tagName.should.equal('DIV');
+    hscript.children.should.have.length(3);
+    hscript.children[0].tagName.should.equal('H1');
+    hscript.children[1].text.should.equal(' ');
+    hscript.children[2].should.have.property('text');
+    hscript.children[2].should.not.have.property('tagName');
+    hscript.children[2].text.should.equal('<script>alert("hello")</script>');
 });
