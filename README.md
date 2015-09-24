@@ -1,0 +1,2 @@
+# sanitize-hs
+Sanitize HyperScript
