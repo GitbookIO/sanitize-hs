@@ -7,7 +7,8 @@
         "lodash": "^3.10.1"
     },
     "devDependencies": {
-        "mocha": "1.18.2",
+        "mocha": "2.3.3",
+        "should": "7.1.0",
         "html2hs": "1.0.3",
         "virtual-dom": "2.1.1"
     },
