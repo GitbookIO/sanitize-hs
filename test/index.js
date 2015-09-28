@@ -41,10 +41,24 @@ it('should sanitize scripts', function() {
     );
 });
 
+it('should sanitize scripts (with src)', function() {
+    assertSanitize(
+        '<div><h1>Hello World</h1> <script src="./test.js"></script></div>',
+        '<div><h1>Hello World</h1> </div>'
+    );
+});
+
 it('should sanitize attributes', function() {
     assertSanitize(
         '<div><a href="#" onclick="alert(\'test\')">Hello World</a></div>',
         '<div><a href="#">Hello World</a></div>'
+    );
+});
+
+it('should allow relative paths', function() {
+    assertSanitize(
+        '<div><a href="./test.html">Hello World</a></div>',
+        '<div><a href="./test.html">Hello World</a></div>'
     );
 });
 
