@@ -55,6 +55,12 @@ it('should sanitize attributes', function() {
     );
 });
 
+it('should not sanitize class attribute', function() {
+    assertSanitize(
+        '<div><span class="test"></span></div>'
+    );
+});
+
 it('should allow relative paths', function() {
     assertSanitize(
         '<div><a href="./test.html">Hello World</a></div>',
